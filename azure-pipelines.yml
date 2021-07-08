@@ -21,6 +21,15 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: gitversion/setup@0
+  displayName: 'Install GitTools'
+  inputs:
+    versionSpec: '0.x'
+- task: gitversion/execute@0
+  displayName: 'Calculate SemVer'
+- script: echo current version is $(GitVersion.SemVer)
+  displayName: 'Display calculated version'
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
