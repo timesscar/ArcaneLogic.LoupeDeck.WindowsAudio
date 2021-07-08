@@ -59,21 +59,22 @@
         {
             var matching = this.config.CustomImages.Where(c => c.DeviceName == actionParameter).FirstOrDefault();
 
-            string fileName = "invalid.png";
+            var fileName = "invalid.png";
 
             if (matching != null)
                 fileName = matching.ImageName;
 
             var matchingAudioDevice = this.deviceCache.Where(c => c.FullName == actionParameter).FirstOrDefault();
 
+            var currLoc = Assembly.GetExecutingAssembly().GetFilePath();
             BitmapImage convertedImage;
             if(!matchingAudioDevice.IsDefaultDevice)
             {
-                convertedImage = this.WashOutImage(fileName);
+                convertedImage = this.WashOutImage(Path.Combine(currLoc, Constants.ImagesFolderName, fileName));
             }
             else
             {
-                convertedImage = BitmapImage.FromFile(fileName);
+                convertedImage = BitmapImage.FromFile(Path.Combine(currLoc, Constants.ImagesFolderName, fileName));
             }
 
             convertedImage.Resize(imageSize.GetSize(), imageSize.GetSize());
@@ -93,22 +94,19 @@
             {
                 using (var graphics = Graphics.FromImage(image))
                 {
+                    // Apply a .2 multiplier to the rgb color channels
                     float[][] colorMatrixElements = {
-                       new float[] {.2f,  0,  0,  0, 0},        // red scaling factor of 2
-                       new float[] {0,  .2f,  0,  0, 0},        // green scaling factor of 1
-                       new float[] {0,  0,  .2f,  0, 0},        // blue scaling factor of 1
-                       new float[] {0,  0,  0,  1, 0},        // alpha scaling factor of 1
+                       new float[] {.2f,  0,  0,  0, 0},
+                       new float[] {0,  .2f,  0,  0, 0},
+                       new float[] {0,  0,  .2f,  0, 0},
+                       new float[] {0,  0,  0,  1, 0},  
                        new float[] { 0, 0, 0, 0, 1}};
 
-                    ColorMatrix matrix = new ColorMatrix(colorMatrixElements);
+                    var matrix = new ColorMatrix(colorMatrixElements);
 
-                    //create image attributes  
-                    ImageAttributes attributes = new ImageAttributes();
-
-                    //set the color(opacity) of the image  
+                    var attributes = new ImageAttributes();
                     attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-                    //now draw the image  
                     graphics.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
 
                     graphics.Flush();
