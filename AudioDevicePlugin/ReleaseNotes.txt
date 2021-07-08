@@ -1,0 +1,3 @@
+﻿Initial release of the LoupeDeck windows audio device plugin
+
+Allows switching between audio devices, and controlling the volume and mute state of the default communications device microphone
