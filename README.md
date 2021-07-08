@@ -4,6 +4,6 @@ This is a basic [Loupedeck](https://loupedeck.com/us/) plugin that enables setti
 
 It has only been tested on the "Loupedeck Live" device.  
 
-Disclaimer:  I am not associated in any way with the Loupedeck company.  They maintain any trademark and copyrights over the software. This plugin is implemented using the Loupedeck SDK, and is offered without warranty.
+Disclaimer:  I am not associated in any way with the Loupedeck company. This plugin is implemented using the Loupedeck SDK, and is offered without warranty.  They maintain any trademark and copyrights over the SDK software.
 
 [![Build Status](https://arcanelogic.visualstudio.com/ArcaneLogic.LoupeDeck.WindowsAudio/_apis/build/status/ArcaneLogic.LoupeDeck.WindowsAudio?branchName=main)](https://arcanelogic.visualstudio.com/ArcaneLogic.LoupeDeck.WindowsAudio/_build/latest?definitionId=16&branchName=main)
