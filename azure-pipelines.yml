@@ -15,11 +15,42 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 5.10'
   inputs:
-    restoreSolution: '$(solution)'
+    versionSpec: ' 5.10'
+- task: NuGetCommand@2
+  displayName: 'NuGet restore **\*.sln'
+  inputs:
+    restoreSolution: '$(Parameters.solution)'
+
+- task: VSBuild@1
+  displayName: 'Build solution **\*.sln'
+  inputs:
+    solution: '$(Parameters.solution)'
+    vsVersion: 16.0
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+    clean: true
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(agent.builddirectory)/bin/Release'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+    flattenFolders: true
+
+- task: ArchiveFiles@2
+  displayName: 'Archive $(build.artifactstagingdirectory)'
+  inputs:
+    rootFolderOrFile: '$(build.artifactstagingdirectory)'
+
+- task: PublishSymbols@1
+  displayName: 'Publish symbols path: '
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+  continueOnError: true
+
 
 - task: gitversion/setup@0
   displayName: 'Install GitTools'
