@@ -1,9 +1,4 @@
-﻿// -------------------------------------------------------------------------------------------------
-// <copyright file="JitGroupElement.cs" company="Microsoft">
-//     Copyright (c) Microsoft Corporation.  All rights reserved.
-// </copyright>
-// -------------------------------------------------------------------------------------------------
-
+﻿
 namespace Loupedeck.AudioDevicePlugin.Settings
 {
     using System.Configuration;
