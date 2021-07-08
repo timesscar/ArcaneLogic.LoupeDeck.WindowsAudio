@@ -47,10 +47,11 @@
             this.volumeCooldown = new Timer(this.config.VolumeChangeCooldown);
             this.volumeCooldown.Elapsed += this.VolumeCooldown_Elapsed;
 
+            var currLoc = Assembly.GetExecutingAssembly().GetFilePath();
             this.imageCache = new Dictionary<bool, string>
             {
-                { true, BitmapImage.FromFile(this.config.MuteIcon).ToBase64String() },
-                { false, BitmapImage.FromFile(this.config.UnmuteIcon).ToBase64String() }
+                { true, BitmapImage.FromFile(Path.Combine(currLoc, Constants.ImagesFolderName, this.config.MuteIcon)).ToBase64String() },
+                { false, BitmapImage.FromFile(Path.Combine(currLoc, Constants.ImagesFolderName, this.config.UnmuteIcon)).ToBase64String() }
             };
         }
 
