@@ -70,7 +70,7 @@ steps:
   inputs:
     gitHubConnection: 'GitHub connection 1'
     tagSource: userSpecifiedTag
-    tag: 'release-v$'
+    tag: 'release-v$(GitVersion.SemVer)'
     releaseNotesFilePath: AudioDevicePlugin
     assets: '$(Build.ArtifactStagingDirectory)/**/*.zip'
   enabled: false
