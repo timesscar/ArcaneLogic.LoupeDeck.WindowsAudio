@@ -51,7 +51,6 @@ steps:
     SearchPattern: '**\bin\**\*.pdb'
   continueOnError: true
 
-
 - task: gitversion/setup@0
   displayName: 'Install GitTools'
   inputs:
@@ -61,13 +60,18 @@ steps:
 - script: echo current version is $(GitVersion.SemVer)
   displayName: 'Display calculated version'
 
-- task: VSBuild@1
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
   inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    PathtoPublish: '$(build.artifactstagingdirectory)'
 
-- task: VSTest@2
+- task: GitHubRelease@1
+  displayName: 'GitHub release (create)'
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    gitHubConnection: 'GitHub connection 1'
+    tagSource: userSpecifiedTag
+    tag: 'release-v$'
+    releaseNotesFilePath: AudioDevicePlugin
+    assets: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+  enabled: false
+
