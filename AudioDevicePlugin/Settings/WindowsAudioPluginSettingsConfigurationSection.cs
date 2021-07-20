@@ -6,7 +6,7 @@ namespace Loupedeck.AudioDevicePlugin.Settings
     using System.Reflection;
 
     /// <summary>
-    /// Configuration manager custom section for domain controlers parameters.
+    /// Configuration manager custom section for windows audio settings
     /// </summary>
     public class WindowsAudioPluginSettingsConfigurationSection : ConfigurationSection
     {
@@ -33,7 +33,7 @@ namespace Loupedeck.AudioDevicePlugin.Settings
         }
 
         /// <summary>
-        /// Gets the domain name.
+        /// Gets the cooldown for volume icon changes
         /// </summary>
         [ConfigurationProperty(
             nameof(VolumeChangeCooldown),
@@ -69,7 +69,7 @@ namespace Loupedeck.AudioDevicePlugin.Settings
         }
 
         /// <summary>
-        /// Gets the jit groups.
+        /// Gets a collection of custom image elements
         /// </summary>
         [ConfigurationProperty(nameof(CustomImages))]
         public CustomImageElementCollection CustomImages
