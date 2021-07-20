@@ -5,7 +5,7 @@ namespace Loupedeck.AudioDevicePlugin.Settings
     using System.Configuration;
 
     /// <summary>
-    /// A collection of jit group element.
+    /// A collection of custom image elements
     /// </summary>
     [ConfigurationCollection(typeof(CustomImageElement))]
     public class CustomImageElementCollection : ConfigurationElementCollection, IEnumerable<CustomImageElement>
@@ -22,7 +22,7 @@ namespace Loupedeck.AudioDevicePlugin.Settings
         }
 
         /// <summary>
-        /// Gets the element name for jitgroups elements.
+        /// Gets the element name for custom image lements
         /// </summary>
         protected override string ElementName
         {
@@ -33,9 +33,9 @@ namespace Loupedeck.AudioDevicePlugin.Settings
         }
 
         /// <summary>
-        /// Gets an enumerator that iterates through the <see cref="JitGroupElement"/> collection.
+        /// Gets an enumerator that iterates through the <see cref="CustomImageElement"/> collection.
         /// </summary>
-        /// <returns>A <see cref="JitGroupElement"/> enumerator.</returns>
+        /// <returns>A <see cref="CustomImageElement"/> enumerator.</returns>
         IEnumerator<CustomImageElement> IEnumerable<CustomImageElement>.GetEnumerator()
         {
             for (int i = 0; i < this.Count; i++)
@@ -45,7 +45,7 @@ namespace Loupedeck.AudioDevicePlugin.Settings
         }
 
         /// <summary>
-        /// Craets a new <see cref="JitGroupElement"/>elemment.
+        /// Craets a new <see cref="CustomImageElement"/>element.
         /// </summary>
         /// <returns>A newly created element.</returns>
         protected override ConfigurationElement CreateNewElement()
@@ -57,7 +57,7 @@ namespace Loupedeck.AudioDevicePlugin.Settings
         ///   Gets the element key for a specified configuration element.
         /// </summary>
         /// <param name="element">the config element.</param>
-        /// <returns>A <see cref="JitGroupElement"/> object. </returns>
+        /// <returns>A <see cref="CustomImageElement"/> object. </returns>
         protected override object GetElementKey(ConfigurationElement element)
         {
             return ((CustomImageElement)element).DeviceName;
