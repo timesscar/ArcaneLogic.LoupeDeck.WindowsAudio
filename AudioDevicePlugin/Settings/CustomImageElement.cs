@@ -4,13 +4,13 @@ namespace Loupedeck.AudioDevicePlugin.Settings
     using System.Configuration;
 
     /// <summary>
-    /// Configuration manager custom section for jit groups.
+    /// Configuration manager custom section for custom images
     /// </summary>
     public class CustomImageElement : ConfigurationSection
     {
 
         /// <summary>
-        /// Gets the account type.
+        /// Gets the device name.
         /// </summary>
         [ConfigurationProperty(nameof(DeviceName), IsRequired = true)]
         public string DeviceName
@@ -22,7 +22,7 @@ namespace Loupedeck.AudioDevicePlugin.Settings
         }
 
         /// <summary>
-        /// Gets the account type.
+        /// Gets the image name.
         /// </summary>
         [ConfigurationProperty(nameof(ImageName), IsRequired = true)]
         public string ImageName
