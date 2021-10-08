@@ -10,7 +10,7 @@ Disclaimer:  I am not associated in any way with the Loupedeck company. This plu
 
 
 # Installation  
-Copy the contents of the zip folder to the %LocalAppData%\Loupedeck\Plugins directory and restart the Loupedeck software.
+Copy the contents of the zip folder to the %LocalAppData%\Loupedeck\Plugins directory and restart the Loupedeck software.  Custom images should be placed in an "Images" folder in this directory.
 
 # Usage
 Assign the default device plugins to a button of your choice. 
