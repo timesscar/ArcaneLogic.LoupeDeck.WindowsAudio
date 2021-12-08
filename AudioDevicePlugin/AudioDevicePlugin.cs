@@ -4,7 +4,7 @@ namespace Loupedeck.AudioDevicePlugin
 
     public class AudioDevicePlugin : Plugin
     {
-        public override Boolean HasNoApplication => true;
+        public override Boolean UsesApplicationApiOnly => true;
 
         public override void Load()
         {
