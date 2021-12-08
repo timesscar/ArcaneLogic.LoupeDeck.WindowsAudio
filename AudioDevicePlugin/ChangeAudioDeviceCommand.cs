@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.IO;
@@ -52,8 +53,11 @@
 
             foreach(CustomImageElement item in this.config.CustomImages)
             {
-                this.imageCache.Add(item.ImageName, this.GetBitmapString(item.ImageName));
+                if (!this.imageCache.ContainsKey(item.ImageName))
+                    this.imageCache.Add(item.ImageName, this.GetBitmapString(item.ImageName));
             }
+
+            this.imageCache.Add("invalid.png", this.GetBitmapString("invalid.png"));
         }
 
         /// <inheritdoc />
@@ -81,7 +85,9 @@
 
             var matchingAudioDevice = this.deviceCache.Where(c => c.FullName == actionParameter).FirstOrDefault();
 
-            var convertedImage = matchingAudioDevice.IsDefaultDevice
+            bool washOutImage = !(matchingAudioDevice != null && matchingAudioDevice.IsDefaultDevice);
+
+            var convertedImage = !washOutImage
                 ? BitmapImage.FromBase64String(this.imageCache[fileName])
                 : this.WashOutImage(this.imageCache[fileName]);
 
