@@ -31,7 +31,7 @@
         /// Initializes a new instance of <see cref="AdjustMicVolumeCommand"/>
         /// </summary>
         public AdjustMicVolumeCommand()
-            : base("Adjust mic volume", "Adjusts the default communcation device volume.", "Audio", false)
+            : base("Adjust mic volume", "Adjusts the default communcation device volume.", "Audio", true)
         {
             this.controller = new CoreAudioController();
 
@@ -97,7 +97,7 @@
         }
 
         /// <inheritdoc />
-        protected override String GetCommandDisplayName(String actionParameter, PluginImageSize imageSize)
+        protected override String GetAdjustmentValue(String actionParameter)
         {
             var defaultMic = this.controller.GetDefaultDevice(DeviceType.Capture, Role.Communications);
 
@@ -107,30 +107,10 @@
         /// <inheritdoc />
         protected override BitmapImage GetCommandImage(String actionParameter, PluginImageSize imageSize)
         {
-            if (this.volumeCooldown.Enabled)
-            {
-                var defaultMic = this.controller.GetDefaultDevice(DeviceType.Capture, Role.Communications);
-
-                var volumeString = defaultMic.Volume.ToString();
-                var textImage = this.ConvertTextToImage(volumeString, "Consolas", Color.Black, Color.White, imageSize);
-
-                byte[] result = null;
-
-                if (textImage != null)
-                {
-                    var stream = new MemoryStream();
-
-                    textImage.Save(stream, ImageFormat.Png);
-                    result = stream.ToArray();
-                }
-
-                return new BitmapImage(result);
-            }
-
             var muteState = this.GetDefaultCommDeviceMuteState();
             var desiredImage = BitmapImage.FromBase64String(this.imageCache[muteState]);
 
-            int dimensions = imageSize.GetSize();
+            int dimensions = (int)(imageSize.GetSize() * .8);
             desiredImage.Resize(dimensions, dimensions);
             return desiredImage;
         }
@@ -144,38 +124,6 @@
             var defaultMic = this.controller.GetDefaultDevice(DeviceType.Capture, Role.Communications);
 
             return defaultMic.IsMuted;
-        }
-
-        /// <summary>
-        /// Creates a bitmap image of text from a string
-        /// </summary>
-        /// <param name="text">The text.</param>
-        /// <param name="fontName">The font.</param>
-        /// <param name="backgroundColor">The background color.</param>
-        /// <param name="textColor">The text color.</param>
-        /// <param name="size">The image size.</param>
-        /// <returns>A bitmap containing the supplied text.</returns>
-        public Bitmap ConvertTextToImage(string text, string fontName, Color backgroundColor, Color textColor, PluginImageSize size)
-        {
-            int dimensions = size.GetSize();
-
-            var bitmap = new Bitmap(dimensions, dimensions);
-
-            var fontSize = dimensions / 3;
-            using (var graphics = Graphics.FromImage(bitmap))
-            {
-                using(var font = new Font(fontName, fontSize))
-                {
-                    var horizontalSpacer = (dimensions - text.Length * fontSize) / 2;
-                    var verticalSpacer = (dimensions - fontSize) / 2;
-
-                    graphics.FillRectangle(new SolidBrush(backgroundColor), 0, 0, dimensions, dimensions);
-                    graphics.DrawString(text, font, new SolidBrush(textColor), horizontalSpacer, verticalSpacer);
-                    graphics.Flush();
-                }
-            }
-
-            return bitmap;
         }
     }
 }
