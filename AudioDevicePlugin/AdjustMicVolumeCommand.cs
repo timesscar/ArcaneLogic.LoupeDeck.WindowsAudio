@@ -96,6 +96,7 @@
             this.AdjustmentValueChanged(actionParameter);
         }
 
+        /// <inheritdoc />
         protected override String GetAdjustmentValue(String actionParameter)
         {
             var defaultMic = this.controller.GetDefaultDevice(DeviceType.Capture, Role.Communications);
