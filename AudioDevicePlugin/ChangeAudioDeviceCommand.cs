@@ -139,7 +139,7 @@
                         result = outStream.ToArray();
                     }
 
-                    convertedImage = new BitmapImage(result);
+                    convertedImage = BitmapImage.FromArray(result);
                 }
             }
 
